@@ -11,6 +11,12 @@ const cachedFetch = (url, options) => {
   let cacheKey = url
   let cached = localStorage.getItem(cacheKey)
   let whenCached = localStorage.getItem(cacheKey + ':ts')
+  
+  if (localStorage.length > 30){ // To prevent the localStorage from getting too full
+    localStorage.removeItem(Object.keys(localStorage)[0]); // Remove the item itself
+    localStorage.removeItem(Object.keys(localStorage)[0]); // Remove the item's timestamp
+  }
+  
   if (cached !== null && whenCached !== null) {
     // it was in sessionStorage! Yay!
     // Even though 'whenCached' is a string, this operation
